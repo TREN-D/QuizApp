@@ -1,0 +1,89 @@
+<mat-card class="container">
+  <mat-card-header fxLayout="column">
+    <mat-card-title>
+      Test Description
+    </mat-card-title>
+    <mat-card-subtitle>
+      {{testModel.testDescription}}
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <form fxLayout="column" fxLayoutGap="2%" #form="ngForm">
+      <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="1%">
+        <mat-form-field fxFlex>
+          <mat-label>User Name</mat-label>
+          <input matInput name="userName" [(ngModel)]="createdUrlModel.userName">
+          <mat-hint [align]="end">
+            <fa-icon class="tooltip-cursor"
+              matTooltip="You can leave this field empty and then user will be able to enter his name"
+              class="tooltip-cursor" icon="question-circle">
+            </fa-icon>
+          </mat-hint>
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <mat-label>Number of runs</mat-label>
+          <input matInput type="number" step="1" min="1" (keydown)="onNumberOfRunsKeyDown($event)"
+            [(ngModel)]="createdUrlModel.numberOfRuns" name="numberOfRuns">
+          <mat-hint [align]="end">
+            <fa-icon class="tooltip-cursor" matTooltip="You can leave this field empty or zero and url will be infinite"
+              class="tooltip-cursor" icon="question-circle">
+            </fa-icon>
+          </mat-hint>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="1%">
+        <mat-form-field fxFlex>
+          <mat-label>Active From</mat-label>
+          <input matInput [(ngModel)]="createdUrlModel.activeFrom" name="activeFrom" [matDatepicker]="activeFrom"
+            #activeFromInput="ngModel" [min]="minDate">
+          <mat-datepicker-toggle matSuffix [for]="activeFrom"></mat-datepicker-toggle>
+          <mat-datepicker touchUi #activeFrom></mat-datepicker>
+          <mat-error
+            *ngIf="activeFromInput.errors?.matDatepickerMin && (activeFromInput.touched || activeFromInput.dirty)">
+            Active from date must be higher or equal than todays day.
+          </mat-error>
+          <mat-error
+            *ngIf="activeFromInput.errors?.matDatepickerParse && (activeFromInput.touched || activeFromInput.dirty)">
+            Active from date is invalid.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <mat-label>Active Till</mat-label>
+          <input matInput [(ngModel)]="createdUrlModel.activeTill" name="activeTill" [matDatepicker]="activeTill"
+            #activeTillInput="ngModel" [min]="activeFrom.startAt || minDate">
+          <mat-datepicker-toggle matSuffix [for]="activeTill"></mat-datepicker-toggle>
+          <mat-datepicker touchUi #activeTill></mat-datepicker>
+          <mat-error
+            *ngIf="activeTillInput.errors?.matDatepickerMin && (activeTillInput.touched || activeTillInput.dirty)">
+            Active till date must be higher or equal than active from.
+          </mat-error>
+          <mat-error
+            *ngIf="activeTillInput.errors?.matDatepickerParse && (activeTillInput.touched || activeTillInput.dirty)">
+            Active till date is invalid.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <mat-form-field *ngIf="createdUrlIdentifier">
+        <mat-label>Created url</mat-label>
+        <input matInput name="createdUrl" [value]="createdUrlIdentifier" disabled>
+        <button type="button" matTooltip="Copy url" matSuffix mat-icon-button aria-label="Copy" ngxClipboard
+          [cbContent]="createdUrlIdentifier">
+          <fa-icon icon="external-link-alt">
+          </fa-icon>
+        </button>
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  <mat-card-footer fxLayout="row" fxLayoutAlign="space-around center">
+    <button mat-raised-button color="primary" [routerLink]="['/home']">
+      <fa-icon icon="arrow-circle-left">
+      </fa-icon>
+      Home
+    </button>
+    <button mat-raised-button color="primary" (click)="createUrl()" [disabled]="form.invalid">
+      <fa-icon icon="external-link-alt">
+      </fa-icon>
+      Create Url
+    </button>
+  </mat-card-footer>
+</mat-card>

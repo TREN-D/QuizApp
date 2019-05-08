@@ -1,0 +1,20 @@
+::ng-deep div.mat-card-header-text {
+  margin-right: 0px !important;
+}
+mat-paginator {
+  margin-top: 1%;
+}
+div {
+  &.question-header-container {
+    height: 48px;
+    padding: 0 24px;
+    div.question-header {
+      justify-content: center;
+      text-align: center;
+      flex: 1;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+}

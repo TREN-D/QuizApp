@@ -1,0 +1,15 @@
+<mat-toolbar color="primary">
+  <!--Space between tags-->
+  <span class="space-divider"></span>
+  <!--Desktop menu in future-->
+  <button mat-stroked-button (click)="onSignOut()" fxHide fxShow.gt-xs>Sign Out</button>
+  <!--Mobile menu-->
+  <button mat-icon-button [matMenuTriggerFor]="menu" fxHide.gt-xs>
+    <fa-icon icon="caret-down"></fa-icon>
+  </button>
+  <mat-menu #menu>
+    <button mat-menu-item (click)="onSignOut()">
+      Sign Out
+    </button>
+  </mat-menu>
+</mat-toolbar>

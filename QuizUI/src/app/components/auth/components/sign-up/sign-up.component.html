@@ -1,0 +1,31 @@
+<form fxLayout="column" fxLayoutGap="5%" (ngSubmit)="onSubmit()" #form="ngForm">
+  <mat-form-field fxFlex>
+    <mat-label>Email</mat-label>
+    <input matInput name="email" required email ngModel #email="ngModel">
+    <mat-error *ngIf="email.errors?.required && (email.touched || email.dirty)">
+      Email is required
+    </mat-error>
+    <mat-error *ngIf="email.errors?.email && (email.touched || email.dirty)">
+      Email isn't valid
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field fxFlex>
+    <mat-label>Password</mat-label>
+    <input type="password" matInput name="password" required ngModel #password="ngModel">
+    <mat-error *ngIf="password.errors?.required && (password.touched || password.dirty)">
+      Password is required
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field fxFlex>
+    <mat-label>Confirm password</mat-label>
+    <input type="password" matInput name="confPassword" required ngModel #confPassword="ngModel"
+    appPasswordCompare [controlNameTocompare]="password.name" [errorStateMatcher]="customStateMatcher">
+    <mat-error *ngIf="confPassword.errors?.required && (confPassword.touched || confPassword.dirty)">
+      Confirm password field is required!
+    </mat-error>
+    <mat-error *ngIf="confPassword.errors?.compare && (confPassword.touched || confPassword.dirty)">
+      Passwords should be equal!
+    </mat-error>
+  </mat-form-field>
+  <button fxFlex mat-flat-button color="primary" [disabled]="form.invalid">Submit</button>
+</form>

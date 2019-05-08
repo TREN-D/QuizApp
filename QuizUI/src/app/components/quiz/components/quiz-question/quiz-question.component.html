@@ -1,0 +1,51 @@
+<div fxLayout="column" fxLayoutAlign="center center">
+  <mat-card class="mat-elevation-z8" fxLayout="column">
+    <mat-card-header fxLayoutAlign="center">
+      <mat-card-title>
+        Question #{{currentQuestionIndex+1}}
+      </mat-card-title>
+      <mat-card-subtitle class="questions-amount">
+        {{currentQuestionIndex+1}} of {{totalQuestionsAmount}}
+      </mat-card-subtitle>
+      <mat-card-subtitle>
+        {{currentQuestion.questionText}}
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-divider [inset]="true"></mat-divider>
+    <mat-card-content [ngSwitch]="currentQuestion.questionType" fxLayout="row wrap" fxLayoutAlign="space-between start">
+        <ng-container *ngSwitchCase="questionTypes.text">
+          <mat-form-field fxFlex="calc(50%-5px)">
+            <mat-label>Your answer</mat-label>
+            <input matInput [(ngModel)]="textTypeAnswer">
+          </mat-form-field>
+        </ng-container>
+        <ng-container *ngSwitchCase="questionTypes.check">
+          <mat-checkbox matTooltip="{{option.optionText}}" matTooltipPosition="left" fxFlex="calc(50%-5px)" *ngFor="let option of currentQuestion.options" [(ngModel)]="option.isCorrect" [id]="option.id"
+            [value]="option.optionText">
+            {{option.optionText}}
+          </mat-checkbox>
+        </ng-container>
+        <ng-container *ngSwitchCase="questionTypes.radio">
+          <mat-radio-button matTooltip="{{option.optionText}}" matTooltipPosition="left" fxFlex="calc(50%-5px)" *ngFor="let option of currentQuestion.options" (change)="onRadioChange(option)"
+            [checked]="option.isCorrect" [id]="option.id" [value]="option.optionText">
+            {{option.optionText}}
+          </mat-radio-button>
+        </ng-container>
+    </mat-card-content>
+    <mat-divider [inset]="true" class="flex-divider"></mat-divider>
+    <mat-card-actions fxLayout="row" fxLayoutAlign="space-around center">
+      <button mat-flat-button color="primary" (click)="onPrevious()" [disabled]="currentQuestionIndex==0">
+        Previous question
+      </button>
+      <button mat-flat-button color="primary" (click)="onNext()"
+        *ngIf="currentQuestionIndex<totalQuestionsAmount-1;else lastQuestion">
+        Next question
+      </button>
+      <ng-template #lastQuestion>
+        <button mat-flat-button color="warn" (click)="onFinish()">
+          Finish test
+        </button>
+      </ng-template>
+    </mat-card-actions>
+  </mat-card>
+</div>

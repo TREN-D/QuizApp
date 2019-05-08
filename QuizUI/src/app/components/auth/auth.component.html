@@ -1,0 +1,16 @@
+<div class="nav-wrapper" fxLayout="column" fxLayoutGap="10px">
+    <nav
+    class="login-register"
+    mat-tab-nav-bar
+    fxFlex="auto"
+    fxLayout.lt-sm="column"
+    fxLayout="row">
+    <a mat-tab-link [routerLink]="['./sign-in']" routerLinkActive="active" fxFlex="auto">
+      Sign In
+    </a>
+    <a mat-tab-link [routerLink]="['./sign-up']" routerLinkActive="active" fxFlex="auto">
+      Sign Up
+    </a>
+    </nav>
+    <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,17 @@
+div.zero-elements {
+  text-align: center;
+}
+mat-table {
+  margin-bottom: 1%;
+}
+mat-cell,
+mat-footer-cell,
+mat-header-cell {
+  justify-content: center;
+  text-align: center;
+  & > span {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}

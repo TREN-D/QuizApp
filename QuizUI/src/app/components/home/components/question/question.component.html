@@ -1,0 +1,68 @@
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <div class="question">
+      #{{index}}
+    </div>
+    <div class="question">
+      {{question.questionText}}
+    </div>
+    <div class="question">
+      {{question.scoreForAnswer}}
+    </div>
+    <div class="question">
+      {{questionTypes[question.questionType]}}
+    </div>
+    <div class="question">
+      {{question.options.length}}
+    </div>
+  </mat-expansion-panel-header>
+  <ng-template matExpansionPanelContent>
+    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="2%">
+      <div fxLayout="column" fxLayout.gt-xs="row wrap" fxLayoutGap="20px">
+        <mat-form-field>
+          <mat-label>Question text</mat-label>
+          <textarea matInput rows="1" required [(ngModel)]="questionToUpdate.questionText" #questionText="ngModel"
+            name="questionText"></textarea>
+          <mat-error *ngIf="questionText.errors?.required && (questionText.touched || questionText.dirty)">
+            Question text is required
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Question score</mat-label>
+          <input matInput type="number" step="1" min="0" [max]="maxQuestionScore"
+            (keydown)="onQuestionScoreKeyDown($event)" [(ngModel)]="questionToUpdate.scoreForAnswer"
+            #questionScore="ngModel" name="questionScore">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select [(value)]="questionToUpdate.questionType" (selectionChange)="updateQuestionType()" [disabled]="questionToUpdate.options.length>0">
+            <mat-option *ngFor="let key of questionTypeKeys" [value]="questionTypes[key]">{{key}}</mat-option>
+          </mat-select>
+          <mat-hint [align]="end">
+            <fa-icon matTooltip="If you want to change question type, you need to remove all options!"
+              class="tooltip-cursor" icon="question-circle">
+            </fa-icon>
+          </mat-hint>
+        </mat-form-field>
+      </div>
+      <div fxLayout.lt-md="column" fxLayout="row" fxLayoutAlign="flex-end center" fxLayoutGap="2%"
+        class="question-actions">
+        <button mat-raised-button color="primary" (click)="updateQuestion()" [disabled]="questionText.invalid">
+          <fa-icon icon="upload">
+          </fa-icon>
+          Save
+        </button>
+        <button mat-raised-button color="warn" (click)="deleteQuestion()">
+          <fa-icon icon="minus-circle">
+          </fa-icon>
+          Delete
+        </button>
+      </div>
+    </div>
+
+    <mat-divider [inset]="true"></mat-divider>
+
+    <app-option (delete)="deleteOption($event)" (add)="addOption($event)"
+      [options]="questionToUpdate.options" [questionId]="question.id" [questionType]="questionToUpdate.questionType">
+    </app-option>
+  </ng-template>
+</mat-expansion-panel>

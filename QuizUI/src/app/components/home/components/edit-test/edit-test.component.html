@@ -1,0 +1,74 @@
+<mat-card class="container">
+  <mat-card-header fxLayout="row" fxLayoutAlign="center">
+    <mat-card-title>
+      Achtung! If you change something, all url that are depending on this test will be invalid.
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-header fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign="center" fxLayoutGap="2%">
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <button mat-raised-button color="primary" [routerLink]="['/home']">
+        <fa-icon icon="arrow-circle-left">
+        </fa-icon>
+        Home
+      </button>
+    </div>
+    <mat-form-field>
+      <mat-label>Test name</mat-label>
+      <textarea rows="1" matInput required [(ngModel)]="testModel.testDescription" #testName="ngModel" name="testName"></textarea>
+      <mat-error *ngIf="testName.errors?.required && (testName.touched || testName.dirty)">
+        Test name is required
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field fxFlexAlign="center center">
+      <mat-hint>
+        Time in minutes.
+        Max = {{maxTestTimeValue}}.
+      </mat-hint>
+      <mat-label>Test time</mat-label>
+      <input matInput type="number" step="15" min="0" [max]="maxTestTimeValue" (keydown)="onTestTimeKeyDown($event)"
+        [(ngModel)]="testModel.testTime" #testTime="ngModel" name="testTime">
+      <mat-hint [align]="end">
+        <fa-icon matTooltip="You can leave this field empty or zero and time will be infinite" class="tooltip-cursor"
+          icon="question-circle">
+        </fa-icon>
+      </mat-hint>
+    </mat-form-field>
+    <div fxLayout.lt-md="column" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="2%">
+      <button mat-raised-button color="primary" (click)="updateTest()" [disabled]="testName.invalid">
+        <fa-icon icon="upload">
+        </fa-icon>
+        Save
+      </button>
+      <button mat-raised-button color="primary" (click)="createQuestion()">
+        <fa-icon icon="plus-circle">
+        </fa-icon>
+        Add Question
+      </button>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-accordion>
+        <div class="question-header-container" fxLayoutAlign="row" fxLayoutAlign="center center">
+            <div class="question-header">
+              No.
+            </div>
+            <div class="question-header" title="Question text">
+              Question text
+            </div>
+            <div class="question-header" title="Question score">
+              Question score
+            </div>
+            <div class="question-header" title="Question type">
+              Question type
+            </div>
+            <div class="question-header" title="Options amount">
+              Options amount
+            </div>
+          </div>
+      <app-question (delete)="deleteQuestion($event)" *ngFor="let question of testModel.questions | slice:startIndex:endIndex; index as i" [index]="getIndex(i)" [question]="question"></app-question>
+    </mat-accordion>
+    <mat-paginator (page)="pageChange($event)" [pageSize]="defaultPageSize" [pageSizeOptions]="[5, 10]" [length]="testModel.questions.length" showFirstLastButtons
+      class="mat-elevation-z8">
+    </mat-paginator>
+  </mat-card-content>
+</mat-card>

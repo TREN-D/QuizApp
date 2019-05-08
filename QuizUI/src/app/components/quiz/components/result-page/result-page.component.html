@@ -1,0 +1,45 @@
+<mat-card class="container">
+  <mat-card-header>
+    <mat-card-title>
+      Congratulation {{testResult.userName}} :)
+    </mat-card-title>
+    <mat-card-subtitle>
+      Your score: {{testResult.diffScore}}
+    </mat-card-subtitle>
+    <mat-card-subtitle>
+      You passed this test by: {{testResult.testTime || 0}} minutes
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-divider class="outer"></mat-divider>
+
+  <mat-card-content fxLayout="row wrap" fxLayoutAlign="center">
+    <mat-card *ngFor="let question of testModel.questions" class="inner" flex="calc(250px-5%)" [ngClass]="(question.isCorrect)?'correct':'incorrect'">
+      <mat-card-header>
+        <mat-card-title matTooltip="{{question.questionText}}">
+          {{question.questionText}}
+        </mat-card-title>
+      </mat-card-header>
+      
+      <mat-divider class="inner"></mat-divider>
+
+      <mat-card-content [ngSwitch]="question.questionType" fxLayout="row wrap" fxLayoutAlign="space-between start">
+        <ng-container *ngSwitchCase="questionTypes.text">
+          <mat-form-field fxFlex="calc(50%-5%)" matTooltip="{{getTextAnswerValue(question)}}">
+            <input matInput [value]="getTextAnswerValue(question)" disabled>
+          </mat-form-field>
+        </ng-container>
+        <ng-container *ngSwitchCase="questionTypes.check" >
+          <mat-checkbox fxFlex="calc(50%-5%)" *ngFor="let option of question.options" [checked]="option.isCorrect" matTooltip="{{option.optionText}}" disabled>
+            {{option.optionText}}
+          </mat-checkbox>
+        </ng-container>
+        <ng-container *ngSwitchCase="questionTypes.radio">
+          <mat-radio-button fxFlex="calc(50%-5%)" *ngFor="let option of question.options" [name]="option.id" [checked]="option.isCorrect" matTooltip="{{option.optionText}}" disabled>
+            {{option.optionText}}
+          </mat-radio-button>
+        </ng-container>
+      </mat-card-content>
+    </mat-card>
+  </mat-card-content>
+</mat-card>

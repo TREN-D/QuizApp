@@ -1,0 +1,30 @@
+div.nav-wrapper {
+  width: 40%;
+  left: 30%;
+  position: relative;
+  background-color: #2e3137;
+  margin-top: 5%;
+  padding: 20px;
+  border-radius: 14px;
+  min-width: 150px;
+}
+
+nav.login-register {
+  border-bottom: none;
+  a {
+    color: rgb(219, 213, 213);
+    &.active {
+      color: #fff;
+      border-bottom: 4px solid white;
+    }
+    &:hover {
+      color: #fff;
+      border-bottom: 4px solid rgb(219, 213, 213);
+    }
+  }
+  ::ng-deep div.mat-tab-links {
+    flex-direction: inherit !important;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+}

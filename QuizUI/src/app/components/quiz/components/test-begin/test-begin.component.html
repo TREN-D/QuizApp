@@ -1,0 +1,11 @@
+<mat-card class="container">
+  <mat-card-header>
+    <mat-progress-bar color="primary" [value]="100/testModel.questions.length*(currentQuestionIndex+1)">
+    </mat-progress-bar>
+  </mat-card-header>
+  <mat-card-content>
+    <app-quiz-question [currentQuestion]="currentQuestion" [currentQuestionIndex]="currentQuestionIndex" [totalQuestionsAmount]="testModel.questions.length"
+    [currentQuestionPassedAnswers]="currentQuestionPassedAnswers" [testResultId]="urlModel.id" 
+    (nextQuestionEmit)="onNext($event)" (previousQuestionEmit)="onPrevious($event)"></app-quiz-question>
+  </mat-card-content>
+</mat-card>

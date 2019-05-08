@@ -1,0 +1,26 @@
+.tooltip-cursor {
+  &:hover {
+    cursor: help;
+  }
+}
+
+mat-expansion-panel-header {
+  div {
+    justify-content: center;
+    text-align: center;
+    flex: 1;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}
+
+div {
+  &.question-actions {
+    flex: 1;
+  }
+}
+
+mat-divider {
+  margin: 20px 0px !important;
+}

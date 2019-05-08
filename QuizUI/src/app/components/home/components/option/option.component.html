@@ -1,0 +1,54 @@
+<ng-template #optionTextInput let-option="option">
+  <mat-form-field>
+    <mat-label>Option Text</mat-label>
+    <input (input)="onOptionChange(option)" required matInput [(ngModel)]="option.optionText">
+    <mat-error>
+      This field is required
+    </mat-error>
+  </mat-form-field>
+</ng-template>
+
+<ng-template #emptyOptions>
+  <div class="zero-elements">
+    Zero options found :(
+  </div>
+</ng-template>
+
+<div *ngIf="options.length>0 else emptyOptions" [ngSwitch]="questionType" fxLayout="row wrap" fxLayoutGap="2%">
+  <div *ngFor="let option of options" fxLayout="row" fxLayoutAlign="none center">
+    <ng-container *ngSwitchCase="questionTypes.check">
+      <mat-checkbox [(ngModel)]="option.isCorrect" (change)="onOptionChange(option)">
+        <ng-content *ngTemplateOutlet="optionTextInput;context:{option: option}">
+        </ng-content>
+      </mat-checkbox>
+    </ng-container>
+    <ng-container *ngSwitchCase="questionTypes.radio">
+      <mat-radio-button (change)="onRadioChange(option, $event)" [checked]="option.isCorrect" value="{{option.optionText}}">
+        <ng-content *ngTemplateOutlet="optionTextInput;context:{option: option}">
+        </ng-content>
+      </mat-radio-button>
+    </ng-container>
+    <ng-container *ngSwitchCase="questionTypes.text">
+      <ng-content *ngTemplateOutlet="optionTextInput;context:{option: option}">
+      </ng-content>
+    </ng-container>
+    <button mat-icon-button color="warn" (click)="deleteOption(option)">
+      <fa-icon icon="trash-alt" aria-label="Icon with trash can"></fa-icon>
+    </button>
+  </div>
+</div>
+
+<mat-divider [inset]="true"></mat-divider>
+
+<div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutGap="2%">
+  <button mat-raised-button color="primary" (click)="createOption()">
+    <fa-icon icon="plus-circle">
+    </fa-icon>
+    Add Option
+  </button>
+  <button mat-raised-button color="primary" (click)="updateOptions()" [disabled]="!optionsToUpdate.length">
+    <fa-icon icon="upload">
+    </fa-icon>
+    Save Options
+  </button>
+</div>

@@ -1,0 +1,81 @@
+<ng-template #infinity>
+  <fa-icon icon="infinity"></fa-icon>
+</ng-template>
+
+<mat-card class="container">
+  <mat-card-header fxLayout="row" fxLayoutAlign="center">
+    <mat-card-title>
+      Your tests
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="create-test">
+    <button mat-raised-button color="primary" (click)="createTest()">
+      <fa-icon icon="plus-circle">
+      </fa-icon>
+      Add Test
+    </button>
+  </mat-card-content>
+  <mat-card-content *ngIf="!exist">
+    <div class="zero-elements">You haven't created any test. Create one to see it here!</div>
+  </mat-card-content>
+  <mat-card-content>
+    <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <!--Test index-->
+      <ng-container matColumnDef="Index">
+        <mat-header-cell *matHeaderCellDef>No.</mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index">{{paginator.pageIndex*paginator.pageSize+(i+1)}}</mat-cell>
+      </ng-container>
+      <!--Test Description-->
+      <ng-container matColumnDef="TestDescription">
+        <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <span>{{element.testDescription}}</span>
+        </mat-cell>
+      </ng-container>
+      <!--Test Time-->
+      <ng-container matColumnDef="TestTime">
+        <mat-header-cell *matHeaderCellDef>Test time</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <span *ngIf="element.testTime else infinity">{{element.testTime}}</span>
+        </mat-cell>
+      </ng-container>
+      <!--Test question amount-->
+      <ng-container matColumnDef="Questions">
+        <mat-header-cell fxHide.xs *matHeaderCellDef>Questions amount</mat-header-cell>
+        <mat-cell fxHide.xs *matCellDef="let element">{{element.questions.length}}</mat-cell>
+      </ng-container>
+      <!--Test edit-->
+      <ng-container matColumnDef="TestEdit">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button matTooltip="Edit test" mat-icon-button color="primary" [routerLink]="['edit-test', element.id]">
+            <fa-icon icon="pencil-alt" aria-label="Icon with pen"></fa-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <!--Create Url-->
+      <ng-container matColumnDef="CreateUrl">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button matTooltip="Create url" mat-icon-button color="accent" [routerLink]="['create-url', element.id]">
+            <fa-icon icon="link" aria-label="Link icon"></fa-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <!--Test remove-->
+      <ng-container matColumnDef="TestRemove">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button matTooltip="Delete test" mat-icon-button color="warn" (click)="onDelete(element)">
+            <fa-icon icon="trash-alt" aria-label="Icon with trash can"></fa-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[5, 10]" [length]="testsCount" showFirstLastButtons class="mat-elevation-z8">
+    </mat-paginator>
+  </mat-card-content>
+</mat-card>

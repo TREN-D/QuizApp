@@ -1,0 +1,29 @@
+<div fxLayout="column">
+  <div fxFlex fxHide.lt-sm fxFlexAlign="center">
+    <fa-icon class="user-tie" icon="user-tie"></fa-icon>
+  </div>
+  <form fxLayout="column" fxLayoutGap="5%" (ngSubmit)="onSubmit()" #form="ngForm">
+    <mat-form-field fxFlex>
+      <mat-label>Email</mat-label>
+      <input matInput name="email" ngModel required email #email="ngModel">
+      <mat-error *ngIf="email.errors?.required && (email.touched || email.dirty)">
+        Email is required
+      </mat-error>
+      <mat-error *ngIf="email.errors?.email && (email.touched || email.dirty)">
+          Email isn't valid
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field fxFlex>
+      <mat-label>Password</mat-label>
+      <input matInput [type]="showPassword ? 'text' : 'password'" name="password" ngModel required #password="ngModel">
+      <button type="button" matSuffix mat-icon-button (click)="showPassword = !showPassword">
+        <!--Using here [fas] (font awesome solid) as prefix because [icon] property is binding by ternary operation-->
+        <fa-icon [icon]="showPassword ? ['fas', 'eye'] : ['fas', 'eye-slash']"></fa-icon>
+      </button>
+      <mat-error *ngIf="password.errors?.required && (password.touched || password.dirty)">
+        Password is required
+      </mat-error>
+    </mat-form-field>
+    <button fxFlex mat-flat-button color="primary" [disabled]="form.invalid">Submit</button>
+  </form>
+</div>

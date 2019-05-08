@@ -1,0 +1,39 @@
+mat-divider {
+  margin: 1% 0 !important;
+  &.flex-divider {
+    flex: 1 1 auto;
+  }
+}
+mat-card {
+  height: 400px;
+  width: 300px;
+  margin-top: 5%;
+  mat-card-header {
+    height: 200px;
+    word-break: break-all;
+    text-align: center;
+    overflow: auto;
+  }
+  mat-card-content {
+    height: 200px;
+    margin: 5% 0;
+    overflow: auto;
+    & > * {
+      margin-right: 5px;
+      margin-bottom: 5px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      &>::ng-deep label {
+        display: inline-block;
+        &>div.mat-radio-label-content {
+          display: inline;
+          vertical-align: super;
+        }
+      }
+    }
+  }
+  mat-card-actions {
+    margin-bottom: 2%;
+  }
+}

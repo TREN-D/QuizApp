@@ -1,0 +1,56 @@
+mat-card {
+  mat-card-content {
+    & > * {
+      margin-right: 5%;
+      margin-bottom: 3%;
+    }
+  }
+  &.inner {
+    height: 250px;
+    width: 300px;
+    margin-bottom: 5%;
+    margin-right: 5%;
+    &.correct {
+      border: 1px solid green;
+    }
+    &.incorrect {
+      border: 1px solid red;
+    }
+    mat-card-header {
+      text-align: center;
+      display: contents;
+      height: 100px;
+      white-space: nowrap;
+      mat-card-title {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+    mat-card-content {
+      height: 150px;
+      overflow: auto;
+      &>*{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        &>::ng-deep label {
+          display: inline-block;
+          &>div.mat-radio-label-content {
+            display: inline;
+            vertical-align: super;
+          }
+        }
+      }
+    }
+  }
+}
+
+mat-divider {
+  &.outer {
+    position: unset;
+    margin: 5% 0 !important;
+  }
+  &.inner {
+    position: unset;
+    margin: 10% 0 !important;
+  }
+}
